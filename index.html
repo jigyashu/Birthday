@@ -1,65 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>For Apurva ❤️</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="container">
+  <main class="wrap">
+    <header class="top">
+      <h1>Happy Birthday, Apurva 🎉</h1>
+      <p class="sub">A little story — photo by photo. Tap the heart to see a hidden message.</p>
+    </header>
 
-    <!-- Slideshow pages -->
-    <div class="page active">
-      <img src="assets/photos/memory1.jpg" alt="Memory 1">
-      <p class="heart-message">💖 Our first day in college — you looked so determined 💖</p>
-      <button class="next-btn">Next ➡️</button>
-    </div>
+    <!-- SLIDES: add / remove slides here. each .slide is one "page" -->
+    <section id="slideshow">
 
-    <div class="page">
-      <video controls>
-        <source src="assets/videos/memory2.mp4" type="video/mp4">
-      </video>
-      <p class="heart-message">💖 I still smile whenever I watch this moment 💖</p>
-      <button class="next-btn">Next ➡️</button>
-    </div>
+      <!-- Slide 0 (photo) -->
+      <article class="slide active" data-type="photo" data-msg="Our first day in college — you looked so determined 😊">
+        <img src="assets/photos/memory1.jpg" alt="Memory 1">
+        <button class="reveal-heart" aria-label="Reveal secret message">💖 Reveal</button>
+        <div class="secret" aria-hidden="true"></div>
+        <div class="nav-row">
+          <button class="btn prev" disabled>‹ Prev</button>
+          <div class="dots"></div>
+          <button class="btn next">Next ›</button>
+        </div>
+      </article>
 
-    <div class="page">
-      <img src="assets/photos/memory3.jpg" alt="Memory 3">
-      <p class="heart-message">💖 With you, even small moments feel special 💖</p>
-      <button class="next-btn">Next ➡️</button>
-    </div>
+      <!-- Slide 1 (video) -->
+      <article class="slide" data-type="video" data-msg="I still smile whenever I watch this moment 😄">
+        <video controls playsinline>
+          <source src="assets/videos/memory2.mp4" type="video/mp4">
+          Your browser does not support video.
+        </video>
+        <button class="reveal-heart" aria-label="Reveal secret message">💖 Reveal</button>
+        <div class="secret" aria-hidden="true"></div>
+        <div class="nav-row">
+          <button class="btn prev">‹ Prev</button>
+          <div class="dots"></div>
+          <button class="btn next">Next ›</button>
+        </div>
+      </article>
 
-    <!-- Proposal Page -->
-    <div class="page">
-      <h2>Apurva, will you be my girlfriend? ❤️</h2>
-      <button id="yes-btn">Yes 💕</button>
-      <button id="no-btn">No 😢</button>
-    </div>
+      <!-- Slide 2 (photo) -->
+      <article class="slide" data-type="photo" data-msg="With you, even small moments feel special ✨">
+        <img src="assets/photos/memory3.jpg" alt="Memory 3">
+        <button class="reveal-heart" aria-label="Reveal secret message">💖 Reveal</button>
+        <div class="secret" aria-hidden="true"></div>
+        <div class="nav-row">
+          <button class="btn prev">‹ Prev</button>
+          <div class="dots"></div>
+          <button class="btn next">Next ›</button>
+        </div>
+      </article>
 
-    <!-- YES Surprise Page -->
-    <div class="page" id="yes-page">
-      <h3>Yay! 🎉 Choose your surprise gift:</h3>
-      <select id="gift-dropdown">
-        <option value="">-- Pick one --</option>
-        <option value="virtual-hug">Virtual Hug 🤗</option>
-        <option value="song">A Song Dedication 🎵</option>
-        <option value="ice-cream-date">Ice Cream Date 🍦</option>
-        <option value="earrings">Beautiful Earrings 💍</option>
-      </select>
-      <div id="gift-display"></div>
-      <button id="submit-gift">Submit Gift Choice 🎁</button>
-    </div>
+      <!-- FINAL slide: proposal -->
+      <article class="slide" data-type="final" data-msg="">
+        <div class="proposal-card">
+          <h2>Apurva — one last thing…</h2>
+          <p class="proposal-text">I know I’m not perfect — sometimes boring, annoying, or cheesy 😅 — but I really like you a lot. Will you be my girlfriend?</p>
 
-    <!-- NO Page -->
-    <div class="page" id="no-page">
-      <h3>Ummm no problem 😢💔</h3>
-    </div>
+          <div class="proposal-actions">
+            <button id="btn-yes" class="cta">Yes 💕</button>
+            <button id="btn-no" class="muted">No 😢</button>
+          </div>
 
-  </div>
+          <div id="yes-area" class="yes-area" style="display:none;">
+            <p>Yay! Pick a small surprise:</p>
+            <select id="gift-select" aria-label="Gift choice">
+              <option value="">-- choose --</option>
+              <option value="virtual-hug">Virtual Hug 🤗</option>
+              <option value="song">Song Dedication 🎵</option>
+              <option value="ice-cream">Ice Cream Date 🍦</option>
+              <option value="earrings">Earrings 🎁</option>
+            </select>
+            <div id="gift-preview"></div>
+            <div style="margin-top:12px;">
+              <button id="btn-submit" class="cta">Submit Choice ✅</button>
+            </div>
+          </div>
 
-  <div class="confetti-container"></div>
+          <div id="no-area" class="no-area" style="display:none;">
+            <p class="sad">Ummm… no problem 😢 — thank you for being honest.</p>
+          </div>
+
+        </div>
+
+        <div class="nav-row">
+          <button class="btn prev">‹ Prev</button>
+          <div class="dots"></div>
+          <button class="btn next" disabled>Next ›</button> <!-- final slide: no next -->
+        </div>
+      </article>
+
+    </section>
+
+    <footer class="foot">
+      <small>PS: No pressure — just wanted today to be special.</small>
+    </footer>
+  </main>
+
+  <div class="confetti-root" aria-hidden="true"></div>
+
   <script src="script.js"></script>
 </body>
 </html>
