@@ -120,9 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // GOOGLE FORM constants (YOUR FORM)
   const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSepX4yV2Z_aBdqkslV_gWkahPqveilmVpqb_sJE0ianTufDCQ/formResponse";
-  const ENTRY_PROPOSAL = "entry.1404707409";        // Yes/No field (you provided)
-  const ENTRY_GIFT_A   = "entry.1819396871";        // gift expected id
-  const ENTRY_GIFT_B   = "entry.1819396871_sentinel"; // sentinel variant (some forms)
+  const ENTRY_PROPOSAL = "entry.1819396871";        // Yes/No field (you provided)
+  const ENTRY_GIFT_A   = "entry.1404707409";        // gift expected id
   // (OPTIONAL) if you added a name field, set ENTRY_NAME = "entry.XXXXX"; else leave empty
   const ENTRY_NAME     = "";
 
@@ -138,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const fd = new FormData();
       if (ENTRY_PROPOSAL) fd.append(ENTRY_PROPOSAL, proposal);
       if (ENTRY_GIFT_A) fd.append(ENTRY_GIFT_A, gift);
-      if (ENTRY_GIFT_B) fd.append(ENTRY_GIFT_B, gift);
       if (ENTRY_NAME && name) fd.append(ENTRY_NAME, name);
 
       // 1) try fetch (no-cors)
@@ -169,9 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (ENTRY_GIFT_A) {
         const ig = document.createElement('input'); ig.type='hidden'; ig.name = ENTRY_GIFT_A; ig.value = gift; form.appendChild(ig);
-      }
-      if (ENTRY_GIFT_B) {
-        const ig2 = document.createElement('input'); ig2.type='hidden'; ig2.name = ENTRY_GIFT_B; ig2.value = gift; form.appendChild(ig2);
       }
       if (ENTRY_NAME && name) {
         const iname = document.createElement('input'); iname.type='hidden'; iname.name = ENTRY_NAME; iname.value = name; form.appendChild(iname);
