@@ -1,17 +1,17 @@
 /* script.js
    - single-slide flow (photo/video) with secret heart message per slide
    - prev/next nav, dots, mobile swipe
-   - final proposal: Yes/No -> gift -> submit to Google Form (robust: fetch + hidden form)
-   - Uses your corrected form entry IDs
+   - final proposal: Yes/No -> gift -> submit to Google Form
+   - robust: fetch + hidden form, auto-maps gift to exact form value
 */
 
 document.addEventListener('DOMContentLoaded', () => {
+
   // ---------------- SLIDES ----------------
   const slides = Array.from(document.querySelectorAll('.slide'));
   const total = slides.length;
   let index = 0;
 
-  // build dots for each slide
   slides.forEach((s, i) => {
     const dotsContainers = s.querySelectorAll('.dots');
     dotsContainers.forEach(dc => {
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // swipe support for mobile
   let touchStartX = null;
   let touchStartY = null;
-  const swipeThreshold = 50; // px
+  const swipeThreshold = 50;
 
   document.addEventListener('touchstart', (e) => {
     if(e.touches && e.touches.length === 1){
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   showSlide(0);
 
-  // ---------------- GOOGLE FORM SUBMIT ----------------
+  // ---------------- GOOGLE FORM ----------------
   const btnYes = document.getElementById('btn-yes');
   const btnNo = document.getElementById('btn-no');
   const yesArea = document.getElementById('yes-area');
@@ -106,14 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const giftPreview = document.getElementById('gift-preview');
   const btnSubmit = document.getElementById('btn-submit');
 
-  // Google Form constants (corrected)
   const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSepX4yV2Z_aBdqkslV_gWkahPqveilmVpqb_sJE0ianTufDCQ/formResponse";
-  const ENTRY_PROPOSAL = "entry.1819396871";            // Yes/No field
-  const ENTRY_PROPOSAL_SENTINEL = "entry.1819396871_sentinel"; // optional sentinel
-  const ENTRY_GIFT     = "entry.1404707409";            // gift choice
-  const ENTRY_NAME     = "";                             // optional
+  const ENTRY_PROPOSAL = "entry.1819396871";            
+  const ENTRY_PROPOSAL_SENTINEL = "entry.1819396871_sentinel";
+  const ENTRY_GIFT     = "entry.1404707409";
+  const ENTRY_NAME     = "";
 
-  // dynamically grab hidden/internal fields
   function getFormHiddenFields() {
     const fields = {};
     document.querySelectorAll('input[type="hidden"]').forEach(input => {
@@ -124,27 +122,42 @@ document.addEventListener('DOMContentLoaded', () => {
     return fields;
   }
 
+  // get gift dropdown values from form
+  function getGiftOptions() {
+    const select = document.querySelector(`select[name="${ENTRY_GIFT}"]`);
+    const options = [];
+    if (select) {
+      select.querySelectorAll('option').forEach(opt => {
+        if(opt.value) options.push(opt.value.trim());
+      });
+    }
+    return options;
+  }
+
+  function mapGiftSelection(value) {
+    const options = getGiftOptions();
+    if(!options.length) return value;
+    const match = options.find(opt => opt.toLowerCase().replace(/\s+/g,'-') === value.toLowerCase());
+    return match || options[0];
+  }
+
   function submitToGoogle({ proposal='', gift='', name='' } = {}) {
     const hiddenFields = getFormHiddenFields();
     const fd = new FormData();
 
-    // append user entries (correct order)
     if(ENTRY_PROPOSAL) fd.append(ENTRY_PROPOSAL, proposal);
     if(ENTRY_PROPOSAL_SENTINEL) fd.append(ENTRY_PROPOSAL_SENTINEL, proposal);
     if(ENTRY_GIFT) fd.append(ENTRY_GIFT, gift);
     if(ENTRY_NAME && name) fd.append(ENTRY_NAME, name);
 
-    // append hidden/internal fields
     for(const [k,v] of Object.entries(hiddenFields)) {
       fd.append(k, v);
     }
 
-    // fetch submission
     fetch(FORM_ACTION, { method:'POST', mode:'no-cors', body: fd })
       .then(()=> console.log('Form submitted successfully'))
       .catch(err => console.warn('Form submit error', err));
 
-    // fallback hidden iframe + form
     const iframeName = 'hidden_iframe_' + Math.random().toString(36).slice(2);
     const iframe = document.createElement('iframe');
     iframe.name = iframeName;
@@ -205,8 +218,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // final submit: Yes + gift
   btnSubmit.addEventListener('click', () => {
-    const gift = giftSelect.value;
-    if(!gift) return alert('Please pick a gift before submitting.');
+    const internalGift = giftSelect.value;
+    const gift = mapGiftSelection(internalGift);
+
     submitToGoogle({ proposal:'Yes', gift: gift });
     btnSubmit.disabled = true;
     giftSelect.disabled = true;
