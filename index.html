@@ -1,113 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday ❤️</title>
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- confetti holder -->
-  <div class="confetti-container" aria-hidden="true"></div>
 
-  <main class="page">
-    <header class="hero">
-      <h1 id="hero-title">Happy Birthday, Apurva! 🎉💖</h1>
-      <p class="sub">Celebrating the little moments — college days and everything after.</p>
-    </header>
+  <!-- Section 1: Welcome -->
+  <section class="page active" id="welcome">
+    <h1>Happy Birthday, [Her Name]! 🎉💖</h1>
+    <p>Celebrating the little moments — college days and everything after.</p>
+    <button class="next-btn">Next →</button>
+  </section>
 
-    <!-- SLIDESHOW: page-by-page. Add/remove .slide blocks as you like -->
-    <section class="timeline" aria-label="Memories slideshow">
-      <div class="slides-wrapper">
-        <article class="slide active">
-          <img src="assets/photos/photo1.jpg" alt="Memory 1 - college day">
-          <p class="caption">Our first day in college — you looked so determined 😄</p>
-        </article>
+  <!-- Section 2: Slideshow -->
+  <section class="page" id="memories">
+    <h2>Our Memories 📸</h2>
+    <div class="slide active">
+      <img src="assets/photos/photo1.jpg" alt="Memory 1">
+      <p class="caption">Our first day in college — you looked so determined 😍</p>
+    </div>
+    <div class="slide">
+      <video controls>
+        <source src="assets/videos/video1.mp4" type="video/mp4">
+      </video>
+      <p class="caption">That fun day we couldn’t stop laughing 😄</p>
+    </div>
+    <div class="slide">
+      <img src="assets/photos/photo2.jpg" alt="Memory 2">
+      <p class="caption">Late-night study sessions we never forget 📚✨</p>
+    </div>
+    <div class="slideshow-controls">
+      <button id="prev">&#10094;</button>
+      <button id="next">&#10095;</button>
+    </div>
+    <button class="next-btn">Next →</button>
+  </section>
 
-        <article class="slide">
-          <video controls playsinline>
-            <source src="assets/videos/video1.mp4" type="video/mp4">
-            Your browser does not support video.
-          </video>
-          <p class="caption">That silly day we couldn't stop laughing!</p>
-        </article>
+  <!-- Section 3: Heart Messages -->
+  <section class="page" id="quiz">
+    <h2>Little Messages 💌</h2>
+    <p>Tap a heart to reveal something...</p>
+    <div class="hearts">
+      <div class="heart" data-msg="You always make my day brighter ☀️"></div>
+      <div class="heart" data-msg="I’m so lucky we met ❤️"></div>
+      <div class="heart" data-msg="You inspire me to be better 💫"></div>
+    </div>
+    <p id="heart-message"></p>
+    <button class="next-btn">Next →</button>
+  </section>
 
-        <article class="slide">
-          <img src="assets/photos/photo2.jpg" alt="Memory 3">
-          <p class="caption">Late-night study sessions (and snacks) 📚🍫</p>
-        </article>
+  <!-- Section 4: Proposal -->
+  <section class="page" id="proposal">
+    <h2>One Last Thing... 💖</h2>
+    <p>
+      I know I’m not perfect — sometimes boring, annoying, or cheesy 😅,<br>
+      but I like you a lot ❤️<br><br>
+      Will you be my girlfriend?
+    </p>
+    <button id="yes-btn">Yes 💕</button>
+    <button id="no-btn">No 😢</button>
 
-        <!-- add more .slide blocks here -->
-      </div>
+    <div id="yes-surprise" style="display:none;">
+      <p>Yay! 🎉 I’m so happy! Pick a little surprise:</p>
+      <select id="gift-dropdown">
+        <option value="">Choose...</option>
+        <option value="earrings">Earrings 🎁</option>
+        <option value="ice-cream">Ice Cream Date 🍦</option>
+        <option value="hug">Virtual Hug 🤗</option>
+      </select>
+      <div id="gift-result"></div>
+      <button id="submit-gift">Submit ✅</button>
+    </div>
 
-      <div class="controls">
-        <button id="prev" aria-label="Previous slide">‹</button>
-        <div id="dots" class="dots" aria-hidden="true"></div>
-        <button id="next" aria-label="Next slide">›</button>
-      </div>
-    </section>
+    <div id="no-message" style="display:none;">
+      <p>Ummm… no problem 😢</p>
+    </div>
+  </section>
 
-    <!-- hearts interactive -->
-    <section class="interactive" aria-label="Fun hearts">
-      <h2>Fun Moment Quiz 🎈</h2>
-      <p>Click a heart to reveal a message</p>
-      <div class="hearts">
-        <div class="heart" data-msg="I’m really glad we met ❤️" title="Click me"></div>
-        <div class="heart" data-msg="You always make me smile 😊" title="Click me"></div>
-        <div class="heart" data-msg="Hope your birthday is amazing 💖" title="Click me"></div>
-      </div>
-      <p id="heart-message" class="heart-message" aria-live="polite"></p>
-    </section>
-
-    <!-- finale / proposal -->
-    <section class="finale" aria-label="Finale proposal">
-      <h2>Before you leave… 💌</h2>
-      <p>There’s something I want to tell you.</p>
-      <button id="reveal-btn" class="cta">Click here</button>
-
-      <div id="question-container" class="question" style="display:none;">
-        <p>I know I’m not perfect — sometimes boring, irritating, even cheesy 😅 — but I really like you a lot. Will you be my girlfriend?</p>
-        <div class="yesno">
-          <button id="yes-btn" class="cta">Yes</button>
-          <button id="no-btn" class="muted">No</button>
-        </div>
-      </div>
-
-      <!-- shown if she presses Yes -->
-      <div id="yes-surprise" class="yes-surprise" style="display:none;">
-        <p>Yay! ❤️ Pick a little surprise from the dropdown (I’ll know what you picked):</p>
-
-        <select id="gift-dropdown" aria-label="Choose a gift">
-          <option value="">Select a surprise...</option>
-          <option value="virtual-hug">Virtual Hug 🤗</option>
-          <option value="song">I’ll dedicate a song 🎵</option>
-          <option value="ice-cream-date">Ice Cream Date 🍦</option>
-          <option value="earrings">Special Earrings 🎁</option>
-        </select>
-
-        <div id="gift-msg" class="gift-msg" aria-live="polite"></div>
-        <div id="gift-image" class="gift-image"></div>
-
-        <button id="submit-gift" class="cta" style="margin-top:12px;">Submit Choice ✅</button>
-      </div>
-
-      <!-- shown if she presses No -->
-      <div id="no-message" class="no-message" style="display:none;">
-        <p>Ummm… no problem 😢 — thank you for being you.</p>
-      </div>
-    </section>
-
-    <footer class="note">
-      <p class="small">P.S. No pressure — just wanted to make today special.</p>
-    </footer>
-  </main>
-
-  <!-- background music (optional). Mobile browsers often require a user gesture to start audio. -->
-  <audio id="bg-music" loop>
+  <!-- Background Music -->
+  <audio autoplay loop>
     <source src="assets/music/song.mp3" type="audio/mp3">
   </audio>
 
