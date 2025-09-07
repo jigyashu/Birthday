@@ -2,27 +2,22 @@
    - single-slide flow (photo/video) with secret heart message per slide
    - prev/next nav, dots, mobile swipe
    - final proposal: Yes/No -> gift -> submit to Google Form (robust: fetch + hidden form)
-   - Uses your provided formId and entry IDs (both gift variants for safety)
+   - Uses your corrected form entry IDs
 */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // SLIDES
+  // ---------------- SLIDES ----------------
   const slides = Array.from(document.querySelectorAll('.slide'));
   const total = slides.length;
   let index = 0;
 
-  // build dots for each slide (each slide has a dot region in its .nav-row)
+  // build dots for each slide
   slides.forEach((s, i) => {
     const dotsContainers = s.querySelectorAll('.dots');
     dotsContainers.forEach(dc => {
-      // only set dots in the nav-row of the slide (we'll update active state globally)
       dc.innerHTML = Array.from({length: total}).map((_, j) => `<span class="dot ${j===i? 'active':''}" data-dot="${j}"></span>`).join('');
-      // attach click handlers
       dc.querySelectorAll('.dot').forEach(dot => {
-        dot.addEventListener('click', (e) => {
-          const to = parseInt(e.target.dataset.dot, 10);
-          showSlide(to);
-        });
+        dot.addEventListener('click', (e) => showSlide(parseInt(e.target.dataset.dot, 10)));
       });
     });
   });
@@ -32,23 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (i >= total) i = total - 1;
     slides.forEach((s, idx) => {
       s.classList.toggle('active', idx === i);
-      // enable/disable prev buttons
       const prev = s.querySelector('.prev');
       const next = s.querySelector('.next');
       if (prev) prev.disabled = (i === 0);
       if (next) next.disabled = (i === total -1);
-      // update dots in this slide's nav-row to reflect overall active
       s.querySelectorAll('.dot').forEach(d => d.classList.toggle('active', parseInt(d.dataset.dot,10) === i));
     });
     index = i;
-    // if the current slide contains a video, pause others
     document.querySelectorAll('video').forEach((v, idx) => {
-      if (idx === i && v.paused === false) return;
+      if (idx === i && !v.paused) return;
       try { v.pause(); } catch(e){}
     });
   }
 
-  // attach prev/next buttons on each slide
   slides.forEach((s, idx) => {
     const prev = s.querySelector('.prev');
     const next = s.querySelector('.next');
@@ -63,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const msg = s.dataset.msg || '';
     if(btn && secret) {
       btn.addEventListener('click', () => {
-        // toggle
         const visible = secret.innerHTML.trim().length > 0;
         if(visible){
           secret.innerHTML = '';
@@ -105,11 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
     touchStartY = null;
   });
 
-  // initial show
   showSlide(0);
 
-  /* ---------------- PROPOSAL + FORM SUBMIT ---------------- */
-
+  // ---------------- GOOGLE FORM SUBMIT ----------------
   const btnYes = document.getElementById('btn-yes');
   const btnNo = document.getElementById('btn-no');
   const yesArea = document.getElementById('yes-area');
@@ -118,94 +106,86 @@ document.addEventListener('DOMContentLoaded', () => {
   const giftPreview = document.getElementById('gift-preview');
   const btnSubmit = document.getElementById('btn-submit');
 
-  // GOOGLE FORM constants (YOUR FORM)
+  // Google Form constants (corrected)
   const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSepX4yV2Z_aBdqkslV_gWkahPqveilmVpqb_sJE0ianTufDCQ/formResponse";
-  const ENTRY_PROPOSAL = "entry.1819396871";        // Yes/No field (you provided)
-  const ENTRY_GIFT_A   = "entry.1404707409";        // gift expected id
-  // (OPTIONAL) if you added a name field, set ENTRY_NAME = "entry.XXXXX"; else leave empty
-  const ENTRY_NAME     = "";
+  const ENTRY_PROPOSAL = "entry.1819396871";            // Yes/No field
+  const ENTRY_PROPOSAL_SENTINEL = "entry.1819396871_sentinel"; // optional sentinel
+  const ENTRY_GIFT     = "entry.1404707409";            // gift choice
+  const ENTRY_NAME     = "";                             // optional
 
-  function submitToGoogle({ proposal = '', gift = '', name = '' } = {}){
-    // quick validation
-    if(!FORM_ACTION || FORM_ACTION.indexOf('formResponse') === -1){
-      console.warn('FORM_ACTION not set correctly. Please set the formResponse URL.');
-      return;
-    }
-
-    // Build FormData for fetch attempt
-    try {
-      const fd = new FormData();
-      if (ENTRY_PROPOSAL) fd.append(ENTRY_PROPOSAL, proposal);
-      if (ENTRY_GIFT_A) fd.append(ENTRY_GIFT_A, gift);
-      if (ENTRY_NAME && name) fd.append(ENTRY_NAME, name);
-
-      // 1) try fetch (no-cors)
-      fetch(FORM_ACTION, { method: 'POST', mode: 'no-cors', body: fd })
-        .then(() => console.log('fetch submitted (no-cors)'))
-        .catch(err => console.warn('fetch submit err', err));
-    } catch(e) {
-      console.warn('fetch form submit failed', e);
-    }
-
-    // 2) fallback: hidden form + iframe submit
-    try {
-      const iframeName = 'hidden_iframe_' + Math.random().toString(36).slice(2);
-      const iframe = document.createElement('iframe');
-      iframe.name = iframeName;
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-
-      const form = document.createElement('form');
-      form.action = FORM_ACTION;
-      form.method = 'POST';
-      form.target = iframeName;
-      form.style.display = 'none';
-
-      // append inputs (we add both gift variants so the right one is consumed)
-      if (ENTRY_PROPOSAL) {
-        const ip = document.createElement('input'); ip.type='hidden'; ip.name = ENTRY_PROPOSAL; ip.value = proposal; form.appendChild(ip);
+  // dynamically grab hidden/internal fields
+  function getFormHiddenFields() {
+    const fields = {};
+    document.querySelectorAll('input[type="hidden"]').forEach(input => {
+      if(input.name && input.value !== undefined) {
+        fields[input.name] = input.value;
       }
-      if (ENTRY_GIFT_A) {
-        const ig = document.createElement('input'); ig.type='hidden'; ig.name = ENTRY_GIFT_A; ig.value = gift; form.appendChild(ig);
-      }
-      if (ENTRY_NAME && name) {
-        const iname = document.createElement('input'); iname.type='hidden'; iname.name = ENTRY_NAME; iname.value = name; form.appendChild(iname);
-      }
-
-      document.body.appendChild(form);
-      form.submit();
-
-      // cleanup
-      setTimeout(()=>{ try { iframe.remove(); form.remove(); } catch(e){} }, 3000);
-      console.log('Hidden form fallback submitted.');
-    } catch(err){
-      console.error('Hidden form fallback failed', err);
-    }
+    });
+    return fields;
   }
 
-  // Yes handler: reveal gift area (don't submit yet)
+  function submitToGoogle({ proposal='', gift='', name='' } = {}) {
+    const hiddenFields = getFormHiddenFields();
+    const fd = new FormData();
+
+    // append user entries (correct order)
+    if(ENTRY_PROPOSAL) fd.append(ENTRY_PROPOSAL, proposal);
+    if(ENTRY_PROPOSAL_SENTINEL) fd.append(ENTRY_PROPOSAL_SENTINEL, proposal);
+    if(ENTRY_GIFT) fd.append(ENTRY_GIFT, gift);
+    if(ENTRY_NAME && name) fd.append(ENTRY_NAME, name);
+
+    // append hidden/internal fields
+    for(const [k,v] of Object.entries(hiddenFields)) {
+      fd.append(k, v);
+    }
+
+    // fetch submission
+    fetch(FORM_ACTION, { method:'POST', mode:'no-cors', body: fd })
+      .then(()=> console.log('Form submitted successfully'))
+      .catch(err => console.warn('Form submit error', err));
+
+    // fallback hidden iframe + form
+    const iframeName = 'hidden_iframe_' + Math.random().toString(36).slice(2);
+    const iframe = document.createElement('iframe');
+    iframe.name = iframeName;
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    const form = document.createElement('form');
+    form.action = FORM_ACTION;
+    form.method = 'POST';
+    form.target = iframeName;
+    form.style.display = 'none';
+
+    fd.forEach((v,k) => {
+      const ip = document.createElement('input');
+      ip.type = 'hidden';
+      ip.name = k;
+      ip.value = v;
+      form.appendChild(ip);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+
+    setTimeout(()=>{ iframe.remove(); form.remove(); }, 3000);
+  }
+
+  // Yes/No handlers
   btnYes.addEventListener('click', () => {
     yesArea.style.display = 'block';
     noArea.style.display = 'none';
-    // gentle confetti burst visual
     burstConfetti(40);
-    // scroll to gift area if on mobile
-    setTimeout(()=> document.getElementById('gift-select').scrollIntoView({behavior:'smooth', block:'center'}), 300);
+    setTimeout(()=> giftSelect.scrollIntoView({behavior:'smooth', block:'center'}), 300);
   });
 
-  // No handler: submit "No" immediately and show no-area
   btnNo.addEventListener('click', () => {
     yesArea.style.display = 'none';
     noArea.style.display = 'block';
-    submitToGoogle({ proposal: 'No', gift: '' });
-    // move to the end (optional)
-    setTimeout(()=> {
-      // show thank-you / last slide - let's find last slide (index = total-1)
-      // keep user on the no-area
-    }, 600);
+    submitToGoogle({ proposal:'No', gift:'' });
   });
 
-  // preview gift visuals
+  // gift preview
   giftSelect.addEventListener('change', () => {
     const v = giftSelect.value;
     giftPreview.innerHTML = '';
@@ -223,20 +203,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // final submit: send "Yes" + gift to Google Form
+  // final submit: Yes + gift
   btnSubmit.addEventListener('click', () => {
     const gift = giftSelect.value;
-    if (!gift) return alert('Please pick a gift before submitting.');
-    submitToGoogle({ proposal: 'Yes', gift: gift });
-    // disable UI and show thanks
+    if(!gift) return alert('Please pick a gift before submitting.');
+    submitToGoogle({ proposal:'Yes', gift: gift });
     btnSubmit.disabled = true;
     giftSelect.disabled = true;
     giftPreview.innerHTML += '<p style="margin-top:8px;color:green">Your choice was submitted — thank you! 💖</p>';
-    // optional: move to final "thanks" slide (last slide)
     setTimeout(()=> showSlide(slides.length - 1), 1000);
   });
 
-  /* ---------------- simple confetti burst ---------------- */
+  // ---------------- CONFETTI ----------------
   function spawnPiece() {
     const el = document.createElement('div');
     el.className = 'confetti';
