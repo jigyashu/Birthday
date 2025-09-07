@@ -160,9 +160,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- GOOGLE FORM SUBMISSION (robust) ---------- */
   // --- YOU MUST replace these with values from YOUR Google Form ---
-  const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse";
-  const ENTRY_PROPOSAL = "entry.1111111111"; // entry id for "Will you be my girlfriend?" question
-  const ENTRY_GIFT     = "entry.2222222222"; // entry id for "Gift Selection" question
+  const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSepX4yV2Z_aBdqkslV_gWkahPqveilmVpqb_sJE0ianTufDCQ/formResponse";
+  const ENTRY_PROPOSAL = "entry.1404707409"; // entry id for "Will you be my girlfriend?" question
+  const ENTRY_GIFT     = "entry.1819396871_sentinel"; // entry id for "Gift Selection" question
   const ENTRY_NAME     = ""; // optional: entry.3333333333 if you have a name field
   // -----------------------------------------------------------------
 
