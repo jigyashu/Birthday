@@ -1,72 +1,93 @@
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: #fff0f5;
-  text-align: center;
+/* simple, mobile-first responsive styles */
+
+:root{
+  --accent: #ff4d6d;
+  --muted: #7a7a7a;
+  --bg: #fff5f8;
 }
 
-.container {
-  max-width: 600px;
-  margin: auto;
-  padding: 20px;
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg, #fff7fb 0%, #fff 100%);
+  color:#222;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
-.page {
-  display: none;
-  flex-direction: column;
-  align-items: center;
+.wrap{max-width:720px;margin:0 auto;padding:18px}
+.top{text-align:center;margin-bottom:8px}
+.top h1{color:var(--accent);margin:6px 0;font-size:1.6rem}
+.top .sub{color:var(--muted);margin:0 0 12px}
+
+#slideshow{display:block}
+.slide{
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  padding:6px;
+  margin-bottom:18px;
+}
+.slide.active{display:flex}
+
+/* media */
+.slide img, .slide video{
+  width:100%;
+  max-height:60vh;
+  object-fit:cover;
+  border-radius:14px;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.06);
 }
 
-.page.active {
-  display: flex;
+/* reveal heart */
+.reveal-heart{
+  background:transparent;
+  border:2px dashed var(--accent);
+  color:var(--accent);
+  padding:8px 14px;
+  border-radius:12px;
+  font-size:1rem;
+  cursor:pointer;
+}
+.secret{
+  margin-top:8px;
+  color:var(--muted);
+  font-style:italic;
+  min-height:2em;
 }
 
-img, video {
-  width: 100%;
-  max-height: 300px;
-  border-radius: 15px;
-  margin-bottom: 15px;
-}
+/* nav row */
+.nav-row{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:12px}
+.btn{background:var(--accent);color:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.dots{flex:1;text-align:center}
+.dots .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#eee;margin:0 6px}
+.dots .dot.active{background:#ffb6c6}
 
-.heart-message {
-  font-size: 1.2rem;
-  color: #ff4d6d;
-  margin-bottom: 10px;
-}
+/* proposal card */
+.proposal-card{background:#fff;border-radius:12px;padding:14px;width:100%;box-shadow:0 8px 26px rgba(0,0,0,0.04)}
+.proposal-text{color:#333;margin:10px 0}
+.proposal-actions{display:flex;gap:12px;justify-content:center;margin-top:6px}
+.cta{background:var(--accent);color:white;padding:10px 14px;border-radius:10px;border:none}
+.muted{background:#eee;color:#333;padding:10px 14px;border-radius:10px;border:none}
+.yes-area,.no-area{margin-top:12px;background:#fff6fb;padding:10px;border-radius:10px}
+.sad{color:#555}
 
-button {
-  background: #ff4d6d;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  margin: 5px;
-}
+/* gift preview */
+#gift-preview img{max-width:180px;border-radius:10px;margin-top:8px}
 
-button:hover {
-  background: #ff1a4d;
-}
+/* confetti piece */
+.confetti{position:fixed;z-index:9999;pointer-events:none}
 
-select {
-  padding: 10px;
-  border-radius: 8px;
-  margin: 10px 0;
-}
+/* footer */
+.foot{text-align:center;margin-top:8px;color:var(--muted)}
 
-#gift-display img {
-  width: 150px;
-  margin-top: 10px;
-  border-radius: 12px;
-}
-
-/* Confetti */
-.confetti-piece {
-  position: fixed;
-  top: 0;
-  width: 8px;
-  height: 12px;
-  opacity: 0.9;
-  pointer-events: none;
+/* small screens */
+@media (max-width:420px){
+  .top h1{font-size:1.3rem}
+  .btn{padding:8px 10px}
+  .reveal-heart{padding:8px 10px}
 }
