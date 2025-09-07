@@ -1,118 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Happy Birthday ❤️</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>For Apurva ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="confetti-container" aria-hidden="true"></div>
 
-  <!-- PAGE 0: Welcome -->
-  <section class="page active" id="page-welcome">
-    <h1>Happy Birthday, Apurva! 🎉💖</h1>
-    <p class="lead">Celebrating our memories — college days and everything after.</p>
-    <button class="nav-next">Next →</button>
-  </section>
+  <div class="container">
 
-  <!-- PAGE 1: Memories (slideshow) -->
-  <section class="page" id="page-memories">
-    <h2>Our Memories 📸</h2>
-    <div class="slides-wrapper" id="slides-wrapper">
-      <!-- Slide 0 -->
-      <article class="mem-slide active">
-        <img src="assets/photos/photo1.jpg" alt="Memory 1 - college day">
-        <p class="caption">Our first day in college — you looked so determined 😄</p>
-      </article>
-
-      <!-- Slide 1 (video) -->
-      <article class="mem-slide">
-        <video controls playsinline>
-          <source src="assets/videos/video1.mp4" type="video/mp4">
-          Your browser does not support video.
-        </video>
-        <p class="caption">That fun day we couldn't stop laughing!</p>
-      </article>
-
-      <!-- Slide 2 -->
-      <article class="mem-slide">
-        <img src="assets/photos/photo2.jpg" alt="Memory 3">
-        <p class="caption">Late-night study sessions (and snacks) 📚🍫</p>
-      </article>
-      <!-- add more mem-slide blocks as needed -->
+    <!-- Slideshow pages -->
+    <div class="page active">
+      <img src="assets/photos/memory1.jpg" alt="Memory 1">
+      <p class="heart-message">💖 Our first day in college — you looked so determined 💖</p>
+      <button class="next-btn">Next ➡️</button>
     </div>
 
-    <div class="slideshow-controls">
-      <button id="mem-prev" class="small">‹</button>
-      <div id="mem-dots" class="dots" aria-hidden="true"></div>
-      <button id="mem-next" class="small">›</button>
+    <div class="page">
+      <video controls>
+        <source src="assets/videos/memory2.mp4" type="video/mp4">
+      </video>
+      <p class="heart-message">💖 I still smile whenever I watch this moment 💖</p>
+      <button class="next-btn">Next ➡️</button>
     </div>
 
-    <button class="nav-next">Next →</button>
-  </section>
-
-  <!-- PAGE 2: Hearts Quiz -->
-  <section class="page" id="page-hearts">
-    <h2>Little Messages 💌</h2>
-    <p>Tap a heart to reveal a message.</p>
-    <div class="hearts">
-      <div class="heart" data-msg="You always make my day brighter ☀️" title="tap"></div>
-      <div class="heart" data-msg="I’m so glad we met ❤️" title="tap"></div>
-      <div class="heart" data-msg="You inspire me to be better ✨" title="tap"></div>
-    </div>
-    <p id="heart-message" class="heart-message" aria-live="polite"></p>
-    <button class="nav-next">Next →</button>
-  </section>
-
-  <!-- PAGE 3: Proposal + Gift -->
-  <section class="page" id="page-proposal">
-    <h2>One last thing… 💖</h2>
-    <p class="proposal-text">
-      I know I’m not perfect — sometimes boring, irritating, or even cheesy 😅 —<br>
-      but I really like you a lot. Will you be my girlfriend?
-    </p>
-
-    <div class="proposal-actions">
-      <button id="btn-yes" class="cta">Yes 💕</button>
-      <button id="btn-no" class="muted">No 😢</button>
+    <div class="page">
+      <img src="assets/photos/memory3.jpg" alt="Memory 3">
+      <p class="heart-message">💖 With you, even small moments feel special 💖</p>
+      <button class="next-btn">Next ➡️</button>
     </div>
 
-    <div id="yes-area" class="yes-area" style="display:none;">
-      <p>Yay! 🎉 Pick a little surprise:</p>
-      <select id="gift-dropdown" aria-label="Gift choice">
-        <option value="">Choose...</option>
+    <!-- Proposal Page -->
+    <div class="page">
+      <h2>Apurva, will you be my girlfriend? ❤️</h2>
+      <button id="yes-btn">Yes 💕</button>
+      <button id="no-btn">No 😢</button>
+    </div>
+
+    <!-- YES Surprise Page -->
+    <div class="page" id="yes-page">
+      <h3>Yay! 🎉 Choose your surprise gift:</h3>
+      <select id="gift-dropdown">
+        <option value="">-- Pick one --</option>
         <option value="virtual-hug">Virtual Hug 🤗</option>
-        <option value="song">I’ll dedicate a song 🎵</option>
-        <option value="ice-cream">Ice Cream Date 🍦</option>
-        <option value="earrings">Special Earrings 🎁</option>
+        <option value="song">A Song Dedication 🎵</option>
+        <option value="ice-cream-date">Ice Cream Date 🍦</option>
+        <option value="earrings">Beautiful Earrings 💍</option>
       </select>
-
-      <div id="gift-msg" class="gift-msg" aria-live="polite"></div>
-      <div id="gift-image" class="gift-image"></div>
-
-      <div style="margin-top:12px;">
-        <button id="btn-submit-gift" class="cta">Submit Choice ✅</button>
-      </div>
+      <div id="gift-display"></div>
+      <button id="submit-gift">Submit Gift Choice 🎁</button>
     </div>
 
-    <div id="no-area" class="no-area" style="display:none;">
-      <p>Ummm… no problem 😢 — thank you for being honest.</p>
+    <!-- NO Page -->
+    <div class="page" id="no-page">
+      <h3>Ummm no problem 😢💔</h3>
     </div>
-  </section>
 
-  <!-- PAGE 4: Thank you (after submission) -->
-  <section class="page" id="page-thanks">
-    <h2>Thank you ✨</h2>
-    <p class="lead">No matter what — I appreciate you. Have a wonderful birthday.</p>
-  </section>
+  </div>
 
-  <!-- background music (mobile browsers require a gesture to play) -->
-  <audio id="bg-music" loop>
-    <source src="assets/music/song.mp3" type="audio/mp3">
-  </audio>
-
+  <div class="confetti-container"></div>
   <script src="script.js"></script>
 </body>
 </html>
