@@ -14,7 +14,7 @@
   <main class="wrap">
     <header class="top">
       <h1>Happy Birthday, Apurva 🎉</h1>
-      <p class="sub">A little story — photo, video & words from my heart. Tap the heart to see hidden messages 💖</p>
+      <p class="sub">A little story — photos, videos & words from my heart. Tap the heart to see hidden messages 💖</p>
     </header>
 
     <!-- SLIDES -->
@@ -25,11 +25,6 @@
         <img src="assets/photos/graduation.JPEG" alt="Memory 1">
         <button class="reveal-heart">💖 Reveal</button>
         <div class="secret"></div>
-        <div class="nav-row">
-          <button class="btn prev" disabled>‹ Prev</button>
-          <div class="dots"></div>
-          <button class="btn next">Next ›</button>
-        </div>
       </article>
 
       <!-- Slide 1 (video) -->
@@ -39,11 +34,6 @@
         </video>
         <button class="reveal-heart">💖 Reveal</button>
         <div class="secret"></div>
-        <div class="nav-row">
-          <button class="btn prev">‹ Prev</button>
-          <div class="dots"></div>
-          <button class="btn next">Next ›</button>
-        </div>
       </article>
 
       <!-- Slide 2 (photo) -->
@@ -51,28 +41,18 @@
         <img src="assets/photos/memory3.jpg" alt="Memory 3">
         <button class="reveal-heart">💖 Reveal</button>
         <div class="secret"></div>
-        <div class="nav-row">
-          <button class="btn prev">‹ Prev</button>
-          <div class="dots"></div>
-          <button class="btn next">Next ›</button>
-        </div>
       </article>
 
       <!-- Slide 3 (heartfelt text only) -->
       <article class="slide" data-msg="You’re not just a friend — you are my safe place, my happiness, my favorite person 💕">
         <div class="heartfelt">
           <h2>From my heart… ❤️</h2>
-          <p>Some memories don’t need photos, they live inside me.  
-          Thank you for being you — sweet, strong, and so special.  
+          <p>Some memories don’t need photos, they live inside me.<br>
+          Thank you for being you — sweet, strong, and so special.<br>
           I feel lucky to have crossed paths with you ✨</p>
         </div>
         <button class="reveal-heart">💖 Reveal</button>
         <div class="secret"></div>
-        <div class="nav-row">
-          <button class="btn prev">‹ Prev</button>
-          <div class="dots"></div>
-          <button class="btn next">Next ›</button>
-        </div>
       </article>
 
       <!-- Final Slide (proposal) -->
@@ -121,15 +101,16 @@
             ✅ Your response has been saved. Thank you 💖
           </div>
         </div>
-
-        <div class="nav-row">
-          <button class="btn prev">‹ Prev</button>
-          <div class="dots"></div>
-          <button class="btn next" disabled>Next ›</button>
-        </div>
       </article>
 
     </section>
+
+    <!-- navigation -->
+    <div class="nav-row">
+      <button id="prev" class="btn">‹ Prev</button>
+      <div class="dots"></div>
+      <button id="next" class="btn">Next ›</button>
+    </div>
 
     <footer class="foot">
       <small>PS: No pressure — just wanted today to be special 💕</small>
@@ -137,7 +118,6 @@
   </main>
 
   <div class="confetti-root"></div>
-
   <script src="script.js"></script>
 </body>
 </html>
