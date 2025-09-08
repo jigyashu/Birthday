@@ -142,21 +142,3 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// -------- YouTube Music API --------
-let bgPlayer;
-function onYouTubeIframeAPIReady() {
-  bgPlayer = new YT.Player('bg-music');
-}
-
-const musicToggle = document.getElementById("music-toggle");
-musicToggle?.addEventListener("click", () => {
-  if (!bgPlayer) return;
-  const state = bgPlayer.getPlayerState();
-  if (state === 1) {
-    bgPlayer.pauseVideo();
-    musicToggle.textContent = "🎵 Play Music";
-  } else {
-    bgPlayer.playVideo();
-    musicToggle.textContent = "🎵 Pause Music";
-  }
-});
