@@ -14,14 +14,14 @@
       <p class="sub">A little story — photo by photo. Tap the heart to see a hidden message.</p>
     </header>
 
-    <!-- SLIDES: add / remove slides here. each .slide is one "page" -->
+    <!-- SLIDES -->
     <section id="slideshow">
 
-      <!-- Slide 0 (photo) -->
-      <article class="slide active" data-type="photo" data-msg="Our first day in college — you looked so determined 😊">
+      <!-- Slide 0 -->
+      <article class="slide active" data-msg="Our first day in college — you looked so determined 😊">
         <img src="assets/photos/graduation.JPEG" alt="Memory 1">
-        <button class="reveal-heart" aria-label="Reveal secret message">💖 Reveal</button>
-        <div class="secret" aria-hidden="true"></div>
+        <button class="reveal-heart">💖 Reveal</button>
+        <div class="secret"></div>
         <div class="nav-row">
           <button class="btn prev" disabled>‹ Prev</button>
           <div class="dots"></div>
@@ -29,14 +29,13 @@
         </div>
       </article>
 
-      <!-- Slide 1 (video) -->
-      <article class="slide" data-type="video" data-msg="I still smile whenever I watch this moment 😄">
+      <!-- Slide 1 -->
+      <article class="slide" data-msg="I still smile whenever I watch this moment 😄">
         <video controls playsinline>
           <source src="assets/videos/memory2.mp4" type="video/mp4">
-          Your browser does not support video.
         </video>
-        <button class="reveal-heart" aria-label="Reveal secret message">💖 Reveal</button>
-        <div class="secret" aria-hidden="true"></div>
+        <button class="reveal-heart">💖 Reveal</button>
+        <div class="secret"></div>
         <div class="nav-row">
           <button class="btn prev">‹ Prev</button>
           <div class="dots"></div>
@@ -44,11 +43,11 @@
         </div>
       </article>
 
-      <!-- Slide 2 (photo) -->
-      <article class="slide" data-type="photo" data-msg="With you, even small moments feel special ✨">
+      <!-- Slide 2 -->
+      <article class="slide" data-msg="With you, even small moments feel special ✨">
         <img src="assets/photos/memory3.jpg" alt="Memory 3">
-        <button class="reveal-heart" aria-label="Reveal secret message">💖 Reveal</button>
-        <div class="secret" aria-hidden="true"></div>
+        <button class="reveal-heart">💖 Reveal</button>
+        <div class="secret"></div>
         <div class="nav-row">
           <button class="btn prev">‹ Prev</button>
           <div class="dots"></div>
@@ -56,8 +55,8 @@
         </div>
       </article>
 
-      <!-- FINAL slide: proposal -->
-      <article class="slide" data-type="final" data-msg="">
+      <!-- Final Slide -->
+      <article class="slide" data-msg="">
         <div class="proposal-card">
           <h2>Apurva — one last thing…</h2>
           <p class="proposal-text">I know I’m not perfect — sometimes boring, annoying, or cheesy 😅 — but I really like you a lot. Will you be my girlfriend?</p>
@@ -67,31 +66,46 @@
             <button id="btn-no" class="muted">No 😢</button>
           </div>
 
+          <!-- Yes Flow -->
           <div id="yes-area" class="yes-area" style="display:none;">
             <p>Yay! Pick a small surprise:</p>
-            <select id="gift-select" aria-label="Gift choice">
+            <select id="gift-select-yes">
               <option value="">-- choose --</option>
-              <option value="virtual-hug">Virtual Hug 🤗</option>
-              <option value="song">Song Dedication 🎵</option>
-              <option value="ice-cream">Ice Cream Date 🍦</option>
               <option value="earrings">Earrings 🎁</option>
+              <option value="dress">Dress 👗</option>
+              <option value="trip">Trip ✈️</option>
+              <option value="watch">Watch ⌚</option>
+              <option value="purse">Purse 👜</option>
+              <option value="surprise">Surprise 🎉</option>
             </select>
-            <div id="gift-preview"></div>
-            <div style="margin-top:12px;">
-              <button id="btn-submit" class="cta">Submit Choice ✅</button>
-            </div>
+            <div id="gift-preview-yes"></div>
+            <button id="btn-submit-yes" class="cta" style="margin-top:12px;">Submit Choice ✅</button>
           </div>
 
+          <!-- No Flow -->
           <div id="no-area" class="no-area" style="display:none;">
-            <p class="sad">Ummm… no problem 😢 — thank you for being honest.</p>
+            <p>Even if it’s No, you still deserve a gift 💝</p>
+            <select id="gift-select-no">
+              <option value="">-- choose --</option>
+              <option value="shoes">Shoes 👟</option>
+              <option value="softtoy">Soft Toy 🧸</option>
+              <option value="chocolates">Chocolates 🍫</option>
+              <option value="jacket">Jacket 🧥</option>
+            </select>
+            <div id="gift-preview-no"></div>
+            <button id="btn-submit-no" class="cta" style="margin-top:12px;">Submit Choice ✅</button>
           </div>
 
+          <!-- Confirmation -->
+          <div id="thanks-msg" style="display:none; margin-top:16px; color:green; font-weight:600;">
+            ✅ Your response has been saved. Thank you 💖
+          </div>
         </div>
 
         <div class="nav-row">
           <button class="btn prev">‹ Prev</button>
           <div class="dots"></div>
-          <button class="btn next" disabled>Next ›</button> <!-- final slide: no next -->
+          <button class="btn next" disabled>Next ›</button>
         </div>
       </article>
 
@@ -102,8 +116,7 @@
     </footer>
   </main>
 
-  <div class="confetti-root" aria-hidden="true"></div>
-
+  <div class="confetti-root"></div>
   <script src="script.js"></script>
 </body>
 </html>
