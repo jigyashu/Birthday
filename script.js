@@ -142,17 +142,3 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
- // -------- music toggle --------
-  const music = document.getElementById("bg-music");
-  const musicBtn = document.getElementById("music-toggle");
-  musicBtn.onclick = () => {
-    if(music.paused){
-      music.play();
-      musicBtn.textContent = "🎵 Pause Music";
-    } else {
-      music.pause();
-      musicBtn.textContent = "🎵 Play Music";
-    }
-  };
-
-});
