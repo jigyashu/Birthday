@@ -142,3 +142,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+const music = document.getElementById("bg-music");
+const musicBtn = document.getElementById("music-toggle");
+
+musicBtn.onclick = () => {
+  if (music.paused) {
+    music.play().catch(() => {
+      alert("Please allow autoplay in your browser or click the button again!");
+    });
+    musicBtn.textContent = "🎵 Pause Music";
+  } else {
+    music.pause();
+    musicBtn.textContent = "🎵 Play Music";
+  }
+};
+
