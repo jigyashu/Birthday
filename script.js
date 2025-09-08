@@ -141,3 +141,22 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i=0;i<n;i++) setTimeout(spawnConfetti,i*40);
   }
 });
+
+// -------- YouTube Music API --------
+let bgPlayer;
+function onYouTubeIframeAPIReady() {
+  bgPlayer = new YT.Player('bg-music');
+}
+
+const musicToggle = document.getElementById("music-toggle");
+musicToggle?.addEventListener("click", () => {
+  if (!bgPlayer) return;
+  const state = bgPlayer.getPlayerState();
+  if (state === 1) {
+    bgPlayer.pauseVideo();
+    musicToggle.textContent = "🎵 Play Music";
+  } else {
+    bgPlayer.playVideo();
+    musicToggle.textContent = "🎵 Pause Music";
+  }
+});
