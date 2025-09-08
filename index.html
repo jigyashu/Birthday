@@ -8,23 +8,26 @@
 </head>
 <body>
 
+  <!-- Floating hearts background -->
+  <div class="hearts-bg"></div>
+
   <main class="wrap">
     <header class="top">
       <h1>Happy Birthday, Apurva 🎉</h1>
-      <p class="sub">A little story — photo by photo. Tap the heart to see a hidden message.</p>
+      <p class="sub">A little story — photo, video & words from my heart. Tap the heart to see hidden messages 💖</p>
     </header>
 
-    <!-- SLIDES: each .slide is one "page" -->
+    <!-- SLIDES -->
     <section id="slideshow">
 
       <!-- Slide 0 (photo) -->
       <article class="slide active" data-msg="Our first day in college — you looked so determined 😊">
         <img src="assets/photos/graduation.JPEG" alt="Memory 1">
-        <button class="reveal-heart" aria-label="Reveal secret message">💖 Reveal</button>
-        <div class="secret" aria-hidden="true"></div>
+        <button class="reveal-heart">💖 Reveal</button>
+        <div class="secret"></div>
         <div class="nav-row">
           <button class="btn prev" disabled>‹ Prev</button>
-          <div class="dots" aria-hidden="true"></div>
+          <div class="dots"></div>
           <button class="btn next">Next ›</button>
         </div>
       </article>
@@ -34,11 +37,11 @@
         <video controls playsinline>
           <source src="assets/videos/memory2.mp4" type="video/mp4">
         </video>
-        <button class="reveal-heart" aria-label="Reveal secret message">💖 Reveal</button>
-        <div class="secret" aria-hidden="true"></div>
+        <button class="reveal-heart">💖 Reveal</button>
+        <div class="secret"></div>
         <div class="nav-row">
           <button class="btn prev">‹ Prev</button>
-          <div class="dots" aria-hidden="true"></div>
+          <div class="dots"></div>
           <button class="btn next">Next ›</button>
         </div>
       </article>
@@ -46,17 +49,34 @@
       <!-- Slide 2 (photo) -->
       <article class="slide" data-msg="With you, even small moments feel special ✨">
         <img src="assets/photos/memory3.jpg" alt="Memory 3">
-        <button class="reveal-heart" aria-label="Reveal secret message">💖 Reveal</button>
-        <div class="secret" aria-hidden="true"></div>
+        <button class="reveal-heart">💖 Reveal</button>
+        <div class="secret"></div>
         <div class="nav-row">
           <button class="btn prev">‹ Prev</button>
-          <div class="dots" aria-hidden="true"></div>
+          <div class="dots"></div>
           <button class="btn next">Next ›</button>
         </div>
       </article>
 
-      <!-- Final Slide: proposal -->
-      <article class="slide" data-msg="">
+      <!-- Slide 3 (heartfelt text only) -->
+      <article class="slide" data-msg="You’re not just a friend — you are my safe place, my happiness, my favorite person 💕">
+        <div class="heartfelt">
+          <h2>From my heart… ❤️</h2>
+          <p>Some memories don’t need photos, they live inside me.  
+          Thank you for being you — sweet, strong, and so special.  
+          I feel lucky to have crossed paths with you ✨</p>
+        </div>
+        <button class="reveal-heart">💖 Reveal</button>
+        <div class="secret"></div>
+        <div class="nav-row">
+          <button class="btn prev">‹ Prev</button>
+          <div class="dots"></div>
+          <button class="btn next">Next ›</button>
+        </div>
+      </article>
+
+      <!-- Final Slide (proposal) -->
+      <article class="slide">
         <div class="proposal-card">
           <h2>Apurva — one last thing…</h2>
           <p class="proposal-text">I know I’m not perfect — sometimes boring, annoying, or cheesy 😅 — but I really like you a lot. Will you be my girlfriend?</p>
@@ -66,10 +86,10 @@
             <button id="btn-no" class="muted">No 😢</button>
           </div>
 
-          <!-- YES Flow -->
+          <!-- YES flow -->
           <div id="yes-area" class="yes-area" style="display:none;">
             <p>Yay! Pick a small surprise:</p>
-            <select id="gift-select-yes" aria-label="Gift (Yes)">
+            <select id="gift-select-yes">
               <option value="">-- choose --</option>
               <option value="earrings">Earrings 🎁</option>
               <option value="dress">Dress 👗</option>
@@ -79,13 +99,13 @@
               <option value="surprise">Surprise 🎉</option>
             </select>
             <div id="gift-preview-yes" class="gift-preview"></div>
-            <button id="btn-submit-yes" class="cta" style="margin-top:12px;">Submit Choice ✅</button>
+            <button id="btn-submit-yes" class="cta">Submit Choice ✅</button>
           </div>
 
-          <!-- NO Flow -->
+          <!-- NO flow -->
           <div id="no-area" class="no-area" style="display:none;">
             <p>Even if it’s No, please pick a gift (I still want to make you smile):</p>
-            <select id="gift-select-no" aria-label="Gift (No)">
+            <select id="gift-select-no">
               <option value="">-- choose --</option>
               <option value="shoes">Shoes 👟</option>
               <option value="softtoy">Soft Toy 🧸</option>
@@ -93,7 +113,7 @@
               <option value="jacket">Jacket 🧥</option>
             </select>
             <div id="gift-preview-no" class="gift-preview"></div>
-            <button id="btn-submit-no" class="cta" style="margin-top:12px;">Submit Choice ✅</button>
+            <button id="btn-submit-no" class="cta">Submit Choice ✅</button>
           </div>
 
           <!-- Confirmation -->
@@ -104,7 +124,7 @@
 
         <div class="nav-row">
           <button class="btn prev">‹ Prev</button>
-          <div class="dots" aria-hidden="true"></div>
+          <div class="dots"></div>
           <button class="btn next" disabled>Next ›</button>
         </div>
       </article>
@@ -112,11 +132,11 @@
     </section>
 
     <footer class="foot">
-      <small>PS: No pressure — just wanted today to be special.</small>
+      <small>PS: No pressure — just wanted today to be special 💕</small>
     </footer>
   </main>
 
-  <div class="confetti-root" aria-hidden="true"></div>
+  <div class="confetti-root"></div>
 
   <script src="script.js"></script>
 </body>
