@@ -1,133 +1,137 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // -------- slideshow --------
-  const slides = [...document.querySelectorAll(".slide")];
-  let index = 0;
+:root {
+  --accent: #ff4d88;
+  --muted: #7a7a7a;
+  --bg: #fff0f5;
+}
 
-  function renderDots(i) {
-    slides.forEach((s, j) => {
-      const dots = s.querySelector(".dots");
-      if (!dots) return;
-      dots.innerHTML = slides.map(
-        (_, k) => `<span class="dot ${k===i ? "active":""}" data-dot="${k}"></span>`
-      ).join("");
-      dots.querySelectorAll(".dot").forEach(dot => {
-        dot.onclick = () => showSlide(parseInt(dot.dataset.dot));
-      });
-    });
-  }
+* { box-sizing: border-box }
+html, body { height: 100% }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  background: linear-gradient(180deg, #ffe6f0 0%, #fff 100%);
+  color: #222;
+  overflow-x: hidden;
+}
 
-  function showSlide(i) {
-    if (i < 0) i = 0;
-    if (i >= slides.length) i = slides.length - 1;
-    slides.forEach((s, j) => {
-      s.classList.toggle("active", j === i);
-      const prev = s.querySelector(".prev");
-      const next = s.querySelector(".next");
-      if (prev) prev.disabled = j === 0;
-      if (next) next.disabled = j === slides.length-1;
-    });
-    index = i;
-    renderDots(i);
-  }
+.wrap { max-width: 720px; margin: 0 auto; padding: 18px; position: relative; z-index: 2; }
+.top { text-align: center; margin-bottom: 8px }
+.top h1 { color: var(--accent); margin: 6px 0; font-size: 1.8rem }
+.top .sub { color: var(--muted); margin: 0 0 12px }
 
-  slides.forEach((s, i) => {
-    const prev = s.querySelector(".prev");
-    const next = s.querySelector(".next");
-    if (prev) prev.onclick = () => showSlide(i-1);
-    if (next) next.onclick = () => showSlide(i+1);
-  });
+/* background hearts animation */
+.hearts-bg::before, .hearts-bg::after {
+  content: "💕";
+  position: fixed;
+  font-size: 2rem;
+  animation: float 10s linear infinite;
+  color: rgba(255,77,136,0.3);
+}
+.hearts-bg::after {
+  content: "💗";
+  font-size: 2.5rem;
+  left: 30%;
+  animation-duration: 12s;
+}
+@keyframes float {
+  0% { top: 100%; opacity: 0; }
+  50% { opacity: 1; }
+  100% { top: -10%; opacity: 0; }
+}
 
-  showSlide(0);
+#slideshow { display: block }
+.slide {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  margin-bottom: 18px;
+}
+.slide.active { display: flex }
 
-  // -------- reveal hearts --------
-  document.querySelectorAll(".reveal-heart").forEach(btn => {
-    btn.onclick = () => {
-      const slide = btn.closest(".slide");
-      const secret = slide.querySelector(".secret");
-      const msg = slide.dataset.msg || "";
-      if (!secret.textContent) {
-        secret.textContent = msg;
-        btn.textContent = "💖 Hide";
-      } else {
-        secret.textContent = "";
-        btn.textContent = "💖 Reveal";
-      }
-    };
-  });
+.slide img, .slide video {
+  width: 100%;
+  max-height: 60vh;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.06);
+}
 
-  // -------- gifts --------
-  const giftMap = {
-    earrings: "assets/gifts/earrings.jpg",
-    dress: "assets/gifts/dress.jpg",
-    trip: "assets/gifts/trip.jpg",
-    watch: "assets/gifts/watch.jpg",
-    purse: "assets/gifts/purse.jpg",
-    shoes: "assets/gifts/shoes.jpg",
-    softtoy: "assets/gifts/softtoy.jpg",
-    chocolates: "assets/gifts/chocolates.jpg",
-    jacket: "assets/gifts/jacket.jpg"
-  };
+/* heartfelt slide */
+.heartfelt {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  text-align: center;
+}
 
-  function setupGift(selectId, previewId) {
-    const sel = document.getElementById(selectId);
-    const preview = document.getElementById(previewId);
-    sel.addEventListener("change", () => {
-      const val = sel.value;
-      preview.innerHTML = val
-        ? giftMap[val]
-          ? `<p>Selected: ${val}</p><img src="${giftMap[val]}" alt="${val}">`
-          : `<p>Selected: ${val}</p>`
-        : "";
-    });
-  }
-  setupGift("gift-select-yes", "gift-preview-yes");
-  setupGift("gift-select-no", "gift-preview-no");
+/* reveal heart */
+.reveal-heart {
+  background: transparent;
+  border: 2px dashed var(--accent);
+  color: var(--accent);
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.secret {
+  margin-top: 8px;
+  color: var(--muted);
+  font-style: italic;
+  min-height: 2em;
+  text-align: center;
+}
 
-  // -------- proposal buttons --------
-  const yesArea = document.getElementById("yes-area");
-  const noArea = document.getElementById("no-area");
-  const thanksMsg = document.getElementById("thanks-msg");
-  const btnYes = document.getElementById("btn-yes");
-  const btnNo = document.getElementById("btn-no");
+/* nav row */
+.nav-row { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 12px }
+.btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn[disabled] { opacity: .5; cursor: not-allowed }
+.dots { flex: 1; text-align: center }
+.dots .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #eee; margin: 0 6px }
+.dots .dot.active { background: #ffb6c6 }
 
-  btnYes.onclick = () => {
-    yesArea.style.display = "block";
-    noArea.style.display = "none";
-    thanksMsg.style.display = "none";
-    burstConfetti(40);
-  };
+/* proposal */
+.proposal-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  width: 100%;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.05);
+  text-align: center;
+}
+.proposal-text { color: #333; margin: 10px 0 }
+.proposal-actions { display: flex; gap: 12px; justify-content: center; margin-top: 6px }
+.cta { background: var(--accent); color: white; padding: 10px 14px; border-radius: 10px; border: none }
+.muted { background: #eee; color: #333; padding: 10px 14px; border-radius: 10px; border: none }
+.yes-area, .no-area { margin-top: 12px; background: #fff6fb; padding: 12px; border-radius: 12px }
+.sad { color: #555 }
 
-  btnNo.onclick = () => {
-    noArea.style.display = "block";
-    yesArea.style.display = "none";
-    thanksMsg.style.display = "none";
-    burstConfetti(20);
-  };
+/* gift preview */
+.gift-preview img {
+  max-width: 160px;
+  border-radius: 10px;
+  margin-top: 8px;
+}
 
-  // -------- form submission (to Google Forms) --------
-  const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSepX4yV2Z_aBdqkslV_gWkahPqveilmVpqb_sJE0ianTufDCQ/formResponse";
-  const ENTRY_PROPOSAL = "entry.1819396871";
-  const ENTRY_GIFT_YES = "entry.1404707409";
-  const ENTRY_GIFT_NO = "entry.101708814";
+/* footer */
+.foot { text-align: center; margin-top: 12px; color: var(--muted) }
 
-  function submitToGoogle({proposal, gift, giftField}) {
-    const fd = new FormData();
-    fd.append(ENTRY_PROPOSAL, proposal);
-    if (gift && giftField) fd.append(giftField, gift);
+/* confetti */
+.confetti { position: fixed; z-index: 9999; pointer-events: none }
 
-    fetch(FORM_ACTION, {method:"POST", mode:"no-cors", body: fd})
-      .catch(e=>console.warn("submit error", e));
-
-    thanksMsg.style.display = "block";
-  }
-
-  document.getElementById("btn-submit-yes").onclick = () => {
-    const gift = document.getElementById("gift-select-yes").value;
-    if (!gift) return alert("Please choose a gift.");
-    submitToGoogle({proposal:"Yes", gift, giftField: ENTRY_GIFT_YES});
-  };
-
-  document.getElementById("btn-submit-no").onclick = () => {
-    const gift = document.getElementById("gift-select-no").value;
-    if (!gift) return alert("Please choose a gift.");
-    submitToGoogle({proposal:"No", g
+/* responsive */
+@media (max-width: 420px) {
+  .top h1 { font-size: 1.4rem }
+  .btn, .reveal-heart { padding: 8px 10px }
+}
