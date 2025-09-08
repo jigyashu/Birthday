@@ -1,7 +1,6 @@
 :root {
   --accent: #ff4d88;
   --muted: #7a7a7a;
-  --bg: #fff0f5;
 }
 
 * { box-sizing: border-box }
@@ -39,16 +38,28 @@ body {
   100% { top: -10%; opacity: 0; }
 }
 
-#slideshow { display: block }
+/* slideshow */
+#slideshow { position: relative; min-height: 400px }
 .slide {
   display: none;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   padding: 10px;
-  margin-bottom: 18px;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
-.slide.active { display: flex }
+.slide.active {
+  display: flex;
+  opacity: 1;
+  transform: translateX(0);
+  position: relative;
+}
 
 .slide img, .slide video {
   width: 100%;
@@ -98,7 +109,7 @@ body {
 }
 .btn[disabled] { opacity: .5; cursor: not-allowed }
 .dots { flex: 1; text-align: center }
-.dots .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #eee; margin: 0 6px }
+.dots .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #eee; margin: 0 6px; cursor: pointer }
 .dots .dot.active { background: #ffb6c6 }
 
 /* proposal */
@@ -112,10 +123,9 @@ body {
 }
 .proposal-text { color: #333; margin: 10px 0 }
 .proposal-actions { display: flex; gap: 12px; justify-content: center; margin-top: 6px }
-.cta { background: var(--accent); color: white; padding: 10px 14px; border-radius: 10px; border: none }
-.muted { background: #eee; color: #333; padding: 10px 14px; border-radius: 10px; border: none }
+.cta { background: var(--accent); color: white; padding: 10px 14px; border-radius: 10px; border: none; cursor: pointer }
+.muted { background: #eee; color: #333; padding: 10px 14px; border-radius: 10px; border: none; cursor: pointer }
 .yes-area, .no-area { margin-top: 12px; background: #fff6fb; padding: 12px; border-radius: 12px }
-.sad { color: #555 }
 
 /* gift preview */
 .gift-preview img {
