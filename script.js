@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // -------- slideshow --------
   const slides = [...document.querySelectorAll(".slide")];
   const dotsContainer = document.querySelector(".dots");
   let index = 0;
@@ -28,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   showSlide(0);
 
-  // -------- reveal hearts --------
   document.querySelectorAll(".reveal-heart").forEach(btn => {
     btn.onclick = () => {
       const slide = btn.closest(".slide");
@@ -44,17 +42,16 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   });
 
-  // -------- gifts --------
   const giftMap = {
-    earrings: "assets/gifts/earrings.jpg",
-    dress: "assets/gifts/dress.jpg",
-    trip: "assets/gifts/trip.jpg",
-    watch: "assets/gifts/watch.jpg",
-    purse: "assets/gifts/purse.jpg",
-    shoes: "assets/gifts/shoes.jpg",
-    softtoy: "assets/gifts/softtoy.jpg",
-    chocolates: "assets/gifts/chocolates.jpg",
-    jacket: "assets/gifts/jacket.jpg"
+    earrings: "Pandora Earrings/Necklace/Bracelet",
+    dress: "Dress from Shaws",
+    trip: "Weekend trip in Ireland",
+    watch: "Watch from Fossil",
+    purse: "Purse from Michael Kors",
+    shoes: "Shoes",
+    softtoy: "Soft Toy",
+    chocolates: "Chocolates",
+    jacket: "Jacket"
   };
 
   function setupGift(selectId, previewId) {
@@ -64,16 +61,13 @@ document.addEventListener("DOMContentLoaded", () => {
     sel.addEventListener("change", () => {
       const val = sel.value;
       preview.innerHTML = val
-        ? giftMap[val]
-          ? `<p>Selected: ${val}</p><img src="${giftMap[val]}" alt="${val}">`
-          : `<p>Selected: ${val}</p>`
+        ? `<p>Selected: ${giftMap[val] || val}</p>` // removed images
         : "";
     });
   }
   setupGift("gift-select-yes", "gift-preview-yes");
   setupGift("gift-select-no", "gift-preview-no");
 
-  // -------- proposal buttons --------
   const yesArea = document.getElementById("yes-area");
   const noArea = document.getElementById("no-area");
   const thanksMsg = document.getElementById("thanks-msg");
@@ -94,7 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
     burstConfetti(20);
   };
 
-  // -------- form submission (to Google Forms) --------
   const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSepX4yV2Z_aBdqkslV_gWkahPqveilmVpqb_sJE0ianTufDCQ/formResponse";
   const ENTRY_PROPOSAL = "entry.1819396871";
   const ENTRY_GIFT_YES = "entry.1404707409";
@@ -104,10 +97,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const fd = new FormData();
     fd.append(ENTRY_PROPOSAL, proposal);
     if (gift && giftField) fd.append(giftField, gift);
-
     fetch(FORM_ACTION, {method:"POST", mode:"no-cors", body: fd})
       .catch(e=>console.warn("submit error", e));
-
     thanksMsg.style.display = "block";
   }
 
@@ -123,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
     submitToGoogle({proposal:"No", gift, giftField: ENTRY_GIFT_NO});
   };
 
-  // -------- confetti --------
   function spawnConfetti() {
     const el = document.createElement("div");
     el.className = "confetti";
